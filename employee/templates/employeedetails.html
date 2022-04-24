@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>list</title>
+    <title>Title</title>
     <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
@@ -12,10 +12,10 @@
 </head>
 <body>
 <div class="container">
-    <row>
+    <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
-            <table class="table table-hover">
+            <table class="table">
                 <tr>
                     <th>Id</th>
                     <th>User Name</th>
@@ -25,30 +25,21 @@
                     <th>Designation</th>
                     <th>Salary</th>
                     <th>Password</th>
-                    <th>Actions</th>
                 </tr>
-                {%for list in emplist%}
                 <tr>
-                    <td>{{list.id}}</td>
-                    <td>{{list.user_name}}</td>
-                    <td>{{list.employee_name}}</td>
-                    <td>{{list.dob}}</td>
-                    <td>{{list.email}}</td>
-                    <td>{{list.designation}}</td>
-                    <td>{{list.salary}}</td>
-                    <td>{{list.password}}</td>
-                    <th>
-                        <a href="{%url 'details' list.id%}" class="btn btn-outline-warning">View</a>
-                        <a href="{%url 'editemployee' list.id%}" class="btn btn-outline-primary">Edit</a>
-                        <a href="{%url 'deleteemployee' list.id%}" class="btn btn-outline-danger">Delete</a>
-                    </th>
+                    <td>{{empdetails.id}}</td>
+                    <td>{{empdetails.user_name}}</td>
+                    <td>{{empdetails.employee_name}}</td>
+                    <td>{{empdetails.dob}}</td>
+                    <td>{{empdetails.email}}</td>
+                    <td>{{empdetails.designation}}</td>
+                    <td>{{empdetails.salary}}</td>
+                    <td>{{empdetails.password}}</td>
                 </tr>
-
-                {%endfor%}
             </table>
         </div>
         <div class="col-1"></div>
-    </row>
+    </div>
 </div>
 
 </body>

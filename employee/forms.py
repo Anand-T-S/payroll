@@ -1,10 +1,15 @@
 from django import forms
+from employee.models import Employees
 
-class EmployeeRegistrationForm(forms.Form):
-    employee_name=forms.CharField()
-    email=forms.EmailField()
-    user_name=forms.CharField()
-    password=forms.CharField()
-    salary=forms.CharField()
-    designation=forms.CharField()
-    dob=forms.DateField()
+class EmployeeRegistrationForm(forms.ModelForm):
+    class Meta:
+        model=Employees
+        fields=[
+            "employee_name",
+            "email",
+            "user_name",
+            "password",
+            "salary",
+            "designation",
+            "dob"
+        ]
