@@ -10,6 +10,7 @@ class Employees(models.Model):
     designation=models.CharField(max_length=50)
     dob=models.DateField(auto_now_add=False)
 
-
+    def __str__(self):
+        return self.employee_name
 
 
