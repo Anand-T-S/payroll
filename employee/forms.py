@@ -1,5 +1,7 @@
 from django import forms
 from employee.models import Employees
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class EmployeeRegistrationForm(forms.ModelForm):
     class Meta:
@@ -23,3 +25,15 @@ class EmployeeRegistrationForm(forms.ModelForm):
         #     "designation",
         #     "dob"
         # ]
+
+class UserRegistrationForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields=[
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "password1",
+            "password2"
+        ]

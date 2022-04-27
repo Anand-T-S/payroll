@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from employee.forms import EmployeeRegistrationForm
+from employee.forms import EmployeeRegistrationForm,UserRegistrationForm
 from django.views.generic import View
 from employee.models import Employees
 # Create your views here.
@@ -55,4 +55,17 @@ class EmployeeDeleteView(View):
         emp=Employees.objects.get(id=id)
         emp.delete()
         return redirect("employee_list")
+
+class SignUpView(View):
+    template_name="register.html"
+    def get(self,request,*args,**kwargs):
+        form=UserRegistrationForm()
+        return render(request,self.template_name,{"form":form})
+    def post(self,request,*args,**kwargs):
+        form=UserRegistrationForm(request.POST)
+        if not form.is_valid():
+            return render(request,self.template_name,{"form":form})
+        form.save()
+        return render(request,"login.html",{"form":form})
+
 
