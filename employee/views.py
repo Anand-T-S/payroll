@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from employee.forms import EmployeeRegistrationForm,UserRegistrationForm
+from employee.forms import EmployeeRegistrationForm,UserRegistrationForm,LoginForm
 from django.views.generic import View
 from employee.models import Employees
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 
 class EmployeeCreateView(View):
@@ -66,6 +67,32 @@ class SignUpView(View):
         if not form.is_valid():
             return render(request,self.template_name,{"form":form})
         form.save()
-        return render(request,"login.html",{"form":form})
+        return redirect("signin")
+
+class SignInView(View):
+    template_name="login.html"
+    def get(self,request,*args,**kwargs):
+        form=LoginForm()
+        return render(request,self.template_name,{"form":form})
+    def post(self,request,*args,**kwargs):
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get("username")
+            password=form.cleaned_data.get("password")
+            user=authenticate(request,username=username,password=password)
+            if user:
+                login(request,user)
+                print("login success")
+                return redirect("emp-home")
+            else:
+                print("login failed")
+                return redirect("signin")
+
+def signout(request,*args,**kwargs):
+    logout(request)
+    return redirect("signin")
+
+def home(request,*args,**kwargs):
+    return render(request,"home.html")
 
 
