@@ -3,8 +3,11 @@ from employee.forms import EmployeeRegistrationForm,UserRegistrationForm,LoginFo
 from django.views.generic import View
 from employee.models import Employees
 from django.contrib.auth import authenticate,login,logout
+from django.utils.decorators import method_decorator
+from employee.decorators import signin_required
 # Create your views here.
 
+@method_decorator(signin_required,name="dispatch")
 class EmployeeCreateView(View):
     template_name="empcreate.html"   #common template for both get and post
     def get(self,request):
@@ -19,12 +22,14 @@ class EmployeeCreateView(View):
         else:
             return render(request,self.template_name,{"form":form})
 
+@method_decorator(signin_required,name="dispatch")
 class ListAllEmployeesView(View):
     template_name="employeelist.html"
     def get(self,request):
         all_employeelist=Employees.objects.all()
         return render(request,self.template_name,{"emplist":all_employeelist})
 
+@method_decorator(signin_required,name="dispatch")
 class EmployeeDetailView(View):
     template_name="employeedetails.html"
     def get(self,request,*args,**kwargs):
@@ -32,6 +37,7 @@ class EmployeeDetailView(View):
         emp=Employees.objects.get(id=id)
         return render(request,self.template_name,{"empdetails":emp})
 
+@method_decorator(signin_required,name="dispatch")
 class EmployeeEditView(View):
     template_name="empedit.html"
     def get_object(self,id):
@@ -50,6 +56,7 @@ class EmployeeEditView(View):
             form.save()
             return redirect("employee_list")
 
+@method_decorator(signin_required,name="dispatch")
 class EmployeeDeleteView(View):
     def get(self,request,*args,**kwargs):
         id=kwargs.get("id")
@@ -88,10 +95,12 @@ class SignInView(View):
                 print("login failed")
                 return redirect("signin")
 
+@signin_required
 def signout(request,*args,**kwargs):
     logout(request)
     return redirect("signin")
 
+@signin_required
 def home(request,*args,**kwargs):
     return render(request,"home.html")
 
